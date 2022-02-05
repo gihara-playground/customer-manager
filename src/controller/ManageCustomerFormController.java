@@ -23,6 +23,16 @@ public class ManageCustomerFormController {
     public TableView<?> tblCustomers;
 
     public void initialize(){
+        btnAdd.setDisable(true);
+        btnRemove.setDisable(true);
+        txtTelephone.textProperty().addListener((observable, oldValue, newValue) -> {
+            /*if (newValue.trim().matches("\\d{3}-\\d{7}")){
+                btnAdd.setDisable(false);
+            }else{
+                btnAdd.setDisable(true);
+            }*/
+            btnAdd.setDisable(!newValue.trim().matches("\\d{3}-\\d{7}"));
+        });
     }
     
     public void btnAdd_OnAction(ActionEvent event) {
