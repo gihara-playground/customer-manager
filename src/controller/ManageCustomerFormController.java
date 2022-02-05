@@ -1,10 +1,12 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ManageCustomerFormController {
 
@@ -22,7 +24,7 @@ public class ManageCustomerFormController {
     public Button btnSaveCustomer;
     public TableView<?> tblCustomers;
 
-    public void initialize(){
+    public void initialize() throws IOException {
         btnAdd.setDisable(true);
         btnRemove.setDisable(true);
         txtTelephone.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -33,6 +35,15 @@ public class ManageCustomerFormController {
             }*/
             btnAdd.setDisable(!newValue.trim().matches("\\d{3}-\\d{7}"));
         });
+        lstTelephone.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            btnRemove.setDisable(newValue==null);
+        });
+    }
+
+    public void btnRemove_OnAction(ActionEvent event) {
+        String selectedTelephone = lstTelephone.getSelectionModel().getSelectedItem();
+        lstTelephone.getItems().remove(selectedTelephone);
+        lstTelephone.getSelectionModel().clearSelection();
     }
 
     public void txtTelephone_OnAction(ActionEvent event) {
@@ -40,6 +51,13 @@ public class ManageCustomerFormController {
     }
 
     public void btnAdd_OnAction(ActionEvent event) {
+        lstTelephone.getSelectionModel().clearSelection();
+        for (String telephone : lstTelephone.getItems()) {
+            if (telephone.equals(txtTelephone.getText())){
+                txtTelephone.selectAll();
+                return;
+            }
+        }
         lstTelephone.getItems().add(txtTelephone.getText());
         txtTelephone.clear();
         txtTelephone.requestFocus();
@@ -54,9 +72,6 @@ public class ManageCustomerFormController {
     }
 
     public void btnNewCustomer_OnAction(ActionEvent event) {
-    }
-
-    public void btnRemove_OnAction(ActionEvent event) {
     }
 
     public void btnSaveCustomer_OnAction(ActionEvent event) {
