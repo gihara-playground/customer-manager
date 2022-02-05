@@ -17,7 +17,7 @@ public class ManageCustomerFormController {
     public Button btnBrowse;
     public TextField txtTelephone;
     public Button btnAdd;
-    public ListView<?> lstTelephone;
+    public ListView<String> lstTelephone;
     public Button btnRemove;
     public Button btnSaveCustomer;
     public TableView<?> tblCustomers;
@@ -34,8 +34,15 @@ public class ManageCustomerFormController {
             btnAdd.setDisable(!newValue.trim().matches("\\d{3}-\\d{7}"));
         });
     }
-    
+
+    public void txtTelephone_OnAction(ActionEvent event) {
+        btnAdd.fire();
+    }
+
     public void btnAdd_OnAction(ActionEvent event) {
+        lstTelephone.getItems().add(txtTelephone.getText());
+        txtTelephone.clear();
+        txtTelephone.requestFocus();
     }
 
     public void btnBrowse_OnAction(ActionEvent event) {
@@ -53,9 +60,6 @@ public class ManageCustomerFormController {
     }
 
     public void btnSaveCustomer_OnAction(ActionEvent event) {
-    }
-
-    public void txtTelephone_OnAction(ActionEvent event) {
     }
 
 }
