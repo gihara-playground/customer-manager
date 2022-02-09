@@ -72,6 +72,16 @@ public class ManageCustomerFormController {
     }
 
     public void btnNewCustomer_OnAction(ActionEvent event) {
+        txtId.setText(generateNewId());
+    }
+
+    private String generateNewId() {
+        if (tblCustomers.getItems().isEmpty()){
+            return "C001";
+        } else {
+            /* Todo: After creating a table model */
+         return "C001";
+        }
     }
 
     public void btnSaveCustomer_OnAction(ActionEvent event) {
